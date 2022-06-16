@@ -1,0 +1,179 @@
+#------------------------------------------------------------------------------------------------
+#  Copyright (c) 2022 by Aaron Neal Crawford
+#------------------------------------------------------------------------------------------------
+#  Purpose of Program:
+#  Reads a text file, counts all uppercase, lowercase, whitespace, and digits and prints the counts
+#  then replaces all uppercase and whitespaces with lowercases and '-' respectively. Saves changes
+#  to a new file testoutput.txt, and counts all changes, then prints all capitals, lowercases, white
+#  spaces, and digits.
+#=================================================================================================
+# Data Dictionary
+#  Name                     Type          Range         Use
+#  ------                   -----         ----------    -----------------------------------------
+#  f1                       var                         opens testa.txt for reading
+#  read_file                car                         reads file in f1
+#  new_file                 var                         opens testoutput.txt for writing
+#
+#=================================================================================================
+#  Functions used:
+#  Name                  Inputs           Use
+#  ------                ------------     --------------------------------------------------------
+#  character_analysis()  read_file        Counts and prints all uppercase, lowercase, whitespaces,
+#                                         and digits in testa.txt
+#  character_swap()      read_file        Finds and replaces all uppercase letters and replaces
+#                                         with lowercase. Finds and replaces all whitespces with
+#                                         '-'. Counts and prints all upper, lower, whitespace,
+#                                         and digits. Counts and prints changes made. Saves
+#                                         new test to testoutput.txt
+#=================================================================================================
+
+# open file testa.txt for reading
+f1 = open('testa.txt', 'r')
+# read the file
+read_file = f1.read()
+# close the file
+f1.close()
+
+# open testoutput.txt
+new_file = open('testoutput.txt', 'w')
+
+#====================================================================================
+# Function name: character_analysis()     Author: Aaron Crawford
+# Date Written: May 5, 2022
+#====================================================================================
+# Purpose of Function: Counts and prints all uppercase, lowercase, whitespaces,
+#                      and digits in testa.txt
+#====================================================================================
+# Data Dictionary
+#  Name            Type          Range          Use
+#  ------          -----         ----------     ----------------------------
+# upper_count      var           += inf         counter of uppercase items
+# lower_count      var           += inf         counter of lowercase items
+# digit_count      var           += inf         counter of digits
+# space_count      var           += inf         counter of whitespaces
+# elem             var                          used for loops in all counters
+# read_file        var           testa.txt      Contains the single string testa.txt
+#
+#====================================================================================
+# count and print characters
+def character_analysis():
+    # rolling count for uppercase
+    upper_count = 0
+    # loop for counting and adding to upper_count
+    for elem in read_file:
+        if elem.isupper():
+            upper_count += 1
+    # rolling count for lowercase
+    lower_count = 0
+    # loop for counting and adding to lower_count
+    for elem in read_file:
+        if elem.islower():
+            lower_count += 1
+    # rolling count for numbers
+    digit_count = 0
+    # loop for counting and adding to digit_count
+    for elem in read_file:
+        if elem.isdigit():
+            digit_count += 1
+    # rolling count for spaces
+    space_count = 0
+    # loop for counting and adding to space_count
+    for elem in read_file:
+        if elem.isspace():
+            space_count += 1
+    # print out all counts
+    print('Original Text')
+    print('------------------')
+    print('Uppercase letters:', upper_count)
+    print('Lowercase letters:', lower_count)
+    print('Digits:', digit_count)
+    print('Spaces:', space_count)
+
+
+#====================================================================================
+# Function name: character_swap()     Author: Aaron Crawford
+# Date Written: May 5, 2022
+#====================================================================================
+# Purpose of Function: Finds and replaces all uppercase letters and replaces
+#                      with lowercase. Finds and replaces all whitespaces with
+#                      '-'. Counts and prints all upper, lower, whitespace,
+#                      and digits. Counts and prints changes made. Saves
+#                      new test to testoutput.txt
+#====================================================================================
+# Data Dictionary
+#  Name            Type          Range          Use
+#  ------          -----         ----------     ----------------------------
+# newstring        var           string         variable containing the string that
+#                                               will be saved to testoutput.txt
+# space_replace_count var        += inf         counter for spaces replaced
+# upper_replace_count var        += inf         counter for uppercase items replaced
+# read_file        var                          contains str from testa.txt
+# upper_count      var           += inf         counter of uppercase items
+# lower_count      var           += inf         counter of lowercase items
+# digit_count      var           += inf         counter of digits
+# space_count      var           += inf         counter of whitespaces
+# elem             var                          used for loops in all counters
+#
+#====================================================================================
+# Swap and count characters
+def character_swap():
+    # empty string variable to store new text
+    newstring = ''
+    # rolling count for space_replace_count
+    space_replace_count = 0
+    # rolling count for upper_replace_count
+    upper_replace_count = 0
+    # rolling count for upper_count
+    upper_count = 0
+    # rolling count for lower_count
+    lower_count = 0
+    # rolling count for digit_count
+    digit_count = 0
+    # rolling count for space_count
+    space_count = 0
+    # loop checking for lowercase and whitespaces
+    for item in read_file:
+        if item == ' ':
+            # replace with dash, add to counter and newstring
+            dash = item.replace(' ', '-')
+            space_replace_count += 1
+            newstring += dash
+        elif item.upper():
+            # replace with lowercase, add to counter and newstring
+            upper = item.replace(item.upper(), item.lower())
+            upper_replace_count += 1
+            newstring += upper
+    # write data to new_file
+    new_file.write(newstring)
+    # close new_file
+    new_file.close()
+    # loop for counting and adding to upper_count
+    for elem in newstring:
+        if elem.isupper():
+            upper_count += 1
+    # loop for counting and adding to lower_count
+    for elem in newstring:
+        if elem.islower():
+            lower_count += 1
+    # loop for counting and adding to digit_count
+    for elem in newstring:
+        if elem.isdigit():
+            digit_count += 1
+    # loop for counting and adding to space_count
+    for elem in newstring:
+        if elem.isspace():
+            space_count += 1
+    # print changes and new item counts
+    print()
+    print('New Text')
+    print('-----------')
+    print('Uppercase letters:', upper_count)
+    print('Lowercase letters:', lower_count)
+    print('Digits:', digit_count)
+    print('Spaces', space_count)
+    print('Spaces Replaced:', space_replace_count)
+    print('Uppercase letters replaced:', upper_replace_count)
+
+
+character_analysis()
+character_swap()
